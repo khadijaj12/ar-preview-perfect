@@ -1,12 +1,24 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import Navbar from "@/components/Navbar";
+import HeroSection from "@/components/HeroSection";
+import VirtualTryOn from "@/components/VirtualTryOn";
+import FoodPreview from "@/components/FoodPreview";
+import AIFeatures from "@/components/AIFeatures";
+import TechStack from "@/components/TechStack";
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-background">
+      <Navbar />
+      <HeroSection />
+      <VirtualTryOn />
+      <FoodPreview />
+      <AIFeatures />
+      <TechStack />
+      <footer className="py-8 border-t border-border/50">
+        <div className="container text-center text-sm text-muted-foreground font-display">
+          © 2026 ARView — AI-Powered Augmented Reality Previews
+        </div>
+      </footer>
     </div>
   );
 };
