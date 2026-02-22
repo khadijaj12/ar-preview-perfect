@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import VirtualTryOn from "@/components/VirtualTryOn";
 import FoodPreview from "@/components/FoodPreview";
+import MenuCatalog from "@/components/MenuCatalog";
 import AIFeatures from "@/components/AIFeatures";
 import TechStack from "@/components/TechStack";
 
@@ -12,6 +13,7 @@ const Index = () => {
       <HeroSection />
       <VirtualTryOn />
       <FoodPreview />
+      <MenuCatalog />
       <AIFeatures />
       <TechStack />
       <footer className="py-8 border-t border-border/50">

@@ -5,6 +5,7 @@ import { Menu, X, Eye } from "lucide-react";
 const links = [
   { label: "Try-On", href: "#try-on" },
   { label: "Food AR", href: "#food" },
+  { label: "Menu 3D", href: "#menu" },
   { label: "AI Features", href: "#ai" },
 ];
 
