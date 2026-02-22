@@ -4,6 +4,13 @@ import { Canvas } from "@react-three/fiber";
 import { Float, MeshDistortMaterial, OrbitControls } from "@react-three/drei";
 import { Star, Clock, Flame, ChevronRight, RotateCcw } from "lucide-react";
 
+import wagyuImg from "@/assets/menu/wagyu-bowl.jpg";
+import dragonRollImg from "@/assets/menu/dragon-roll.jpg";
+import gardenSaladImg from "@/assets/menu/garden-salad.jpg";
+import lavaCakeImg from "@/assets/menu/lava-cake.jpg";
+import seafoodPaellaImg from "@/assets/menu/seafood-paella.jpg";
+import matchaPannaCottaImg from "@/assets/menu/matcha-panna-cotta.jpg";
+
 interface MenuItem {
   id: string;
   name: string;
@@ -13,6 +20,7 @@ interface MenuItem {
   rating: number;
   prepTime: string;
   calories: string;
+  image: string;
   colors: { main: string; accent: string; plate: string };
   shapes: { type: "sphere" | "torus" | "cone"; args: number[] }[];
 }
@@ -27,6 +35,7 @@ const menuItems: MenuItem[] = [
     rating: 4.9,
     prepTime: "25 min",
     calories: "680 cal",
+    image: wagyuImg,
     colors: { main: "#f97316", accent: "#22c55e", plate: "#1e293b" },
     shapes: [
       { type: "sphere", args: [0.5, 16, 16] },
@@ -43,6 +52,7 @@ const menuItems: MenuItem[] = [
     rating: 4.8,
     prepTime: "20 min",
     calories: "520 cal",
+    image: dragonRollImg,
     colors: { main: "#ef4444", accent: "#facc15", plate: "#1e293b" },
     shapes: [
       { type: "torus", args: [0.6, 0.2, 16, 32] },
@@ -59,6 +69,7 @@ const menuItems: MenuItem[] = [
     rating: 4.7,
     prepTime: "10 min",
     calories: "320 cal",
+    image: gardenSaladImg,
     colors: { main: "#22c55e", accent: "#a855f7", plate: "#1e293b" },
     shapes: [
       { type: "sphere", args: [0.35, 16, 16] },
@@ -75,6 +86,7 @@ const menuItems: MenuItem[] = [
     rating: 4.9,
     prepTime: "15 min",
     calories: "450 cal",
+    image: lavaCakeImg,
     colors: { main: "#92400e", accent: "#dc2626", plate: "#1e293b" },
     shapes: [
       { type: "cone", args: [0.5, 0.7, 16] },
@@ -91,6 +103,7 @@ const menuItems: MenuItem[] = [
     rating: 4.8,
     prepTime: "30 min",
     calories: "750 cal",
+    image: seafoodPaellaImg,
     colors: { main: "#eab308", accent: "#ea580c", plate: "#1e293b" },
     shapes: [
       { type: "sphere", args: [0.3, 16, 16] },
@@ -107,6 +120,7 @@ const menuItems: MenuItem[] = [
     rating: 4.6,
     prepTime: "12 min",
     calories: "280 cal",
+    image: matchaPannaCottaImg,
     colors: { main: "#4ade80", accent: "#fbbf24", plate: "#1e293b" },
     shapes: [
       { type: "cone", args: [0.45, 0.5, 16] },
@@ -206,24 +220,37 @@ const MenuCatalog = () => {
                 className="group rounded-2xl glass overflow-hidden cursor-pointer hover:glow-warm transition-all duration-500"
                 onClick={() => setSelectedDish(item)}
               >
-                {/* 3D Preview */}
-                <div className="relative h-56 bg-gradient-to-b from-card to-background">
-                  <Canvas camera={{ position: [0, 2, 3.5], fov: 45 }}>
-                    <ambientLight intensity={0.7} />
-                    <pointLight position={[3, 4, 3]} color={item.colors.main} intensity={0.8} />
-                    <pointLight position={[-3, 2, -3]} color={item.colors.accent} intensity={0.4} />
-                    <DishModel item={item} />
-                    <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={2} enablePan={false} />
-                  </Canvas>
-                  {/* Category badge */}
-                  <span className="absolute top-3 right-3 px-3 py-1 rounded-full bg-accent/20 text-accent text-xs font-display font-medium backdrop-blur-sm">
+                {/* Photo + 3D split preview */}
+                <div className="relative h-56 grid grid-cols-2">
+                  {/* Reference photo */}
+                  <div className="relative overflow-hidden">
+                    <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent to-card/80" />
+                    <span className="absolute top-3 left-3 px-2 py-0.5 rounded-full bg-background/60 text-foreground text-[10px] font-display font-medium backdrop-blur-sm">
+                      📷 Photo
+                    </span>
+                  </div>
+                  {/* 3D Preview */}
+                  <div className="relative bg-gradient-to-b from-card to-background">
+                    <Canvas camera={{ position: [0, 2, 3.5], fov: 45 }}>
+                      <ambientLight intensity={0.7} />
+                      <pointLight position={[3, 4, 3]} color={item.colors.main} intensity={0.8} />
+                      <pointLight position={[-3, 2, -3]} color={item.colors.accent} intensity={0.4} />
+                      <DishModel item={item} />
+                      <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={2} enablePan={false} />
+                    </Canvas>
+                    <span className="absolute top-3 right-3 px-2 py-0.5 rounded-full bg-primary/20 text-primary text-[10px] font-display font-medium backdrop-blur-sm">
+                      🧊 3D Model
+                    </span>
+                    <div className="absolute bottom-3 right-3 flex items-center gap-1 text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity">
+                      <RotateCcw className="w-3 h-3" />
+                      Rotate
+                    </div>
+                  </div>
+                  {/* Category badge centered */}
+                  <span className="absolute bottom-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-accent/20 text-accent text-xs font-display font-medium backdrop-blur-sm">
                     {item.category}
                   </span>
-                  {/* Rotate hint */}
-                  <div className="absolute bottom-3 left-3 flex items-center gap-1 text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity">
-                    <RotateCcw className="w-3 h-3" />
-                    Drag to rotate
-                  </div>
                 </div>
 
                 {/* Info */}
@@ -274,18 +301,32 @@ const MenuCatalog = () => {
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.9, opacity: 0 }}
-                className="relative w-full max-w-2xl rounded-2xl glass-strong gradient-border overflow-hidden"
+                className="relative w-full max-w-3xl rounded-2xl glass-strong gradient-border overflow-hidden"
                 onClick={(e) => e.stopPropagation()}
               >
-                <div className="h-80 md:h-96">
-                  <Canvas camera={{ position: [0, 2.5, 4], fov: 45 }}>
-                    <ambientLight intensity={0.8} />
-                    <pointLight position={[5, 5, 5]} color={selectedDish.colors.main} intensity={1} />
-                    <pointLight position={[-5, 3, -5]} color={selectedDish.colors.accent} intensity={0.6} />
-                    <spotLight position={[0, 8, 0]} intensity={0.3} />
-                    <DishModel item={selectedDish} />
-                    <OrbitControls enableZoom autoRotate autoRotateSpeed={1} enablePan={false} />
-                  </Canvas>
+                <div className="grid md:grid-cols-2 h-80 md:h-96">
+                  {/* Reference photo */}
+                  <div className="relative hidden md:block">
+                    <img src={selectedDish.image} alt={selectedDish.name} className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent to-card/60" />
+                    <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-background/60 text-foreground text-xs font-display font-medium backdrop-blur-sm">
+                      📷 Reference Photo
+                    </span>
+                  </div>
+                  {/* 3D view */}
+                  <div className="relative">
+                    <Canvas camera={{ position: [0, 2.5, 4], fov: 45 }}>
+                      <ambientLight intensity={0.8} />
+                      <pointLight position={[5, 5, 5]} color={selectedDish.colors.main} intensity={1} />
+                      <pointLight position={[-5, 3, -5]} color={selectedDish.colors.accent} intensity={0.6} />
+                      <spotLight position={[0, 8, 0]} intensity={0.3} />
+                      <DishModel item={selectedDish} />
+                      <OrbitControls enableZoom autoRotate autoRotateSpeed={1} enablePan={false} />
+                    </Canvas>
+                    <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-primary/20 text-primary text-xs font-display font-medium backdrop-blur-sm">
+                      🧊 3D Preview
+                    </span>
+                  </div>
                 </div>
                 <div className="p-6">
                   <div className="flex items-start justify-between mb-2">
