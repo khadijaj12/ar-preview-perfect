@@ -2,7 +2,8 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Canvas } from "@react-three/fiber";
 import { Float, MeshDistortMaterial, OrbitControls } from "@react-three/drei";
-import { Star, Clock, Flame, ChevronRight, RotateCcw } from "lucide-react";
+import { Star, Clock, Flame, ChevronRight, RotateCcw, Camera } from "lucide-react";
+import ARCameraView from "@/components/ARCameraView";
 
 import wagyuImg from "@/assets/menu/wagyu-bowl.jpg";
 import dragonRollImg from "@/assets/menu/dragon-roll.jpg";
@@ -21,112 +22,60 @@ interface MenuItem {
   prepTime: string;
   calories: string;
   image: string;
+  servingSize: string;
+  plateDiameter: string;
   colors: { main: string; accent: string; plate: string };
   shapes: { type: "sphere" | "torus" | "cone"; args: number[] }[];
 }
 
 const menuItems: MenuItem[] = [
   {
-    id: "1",
-    name: "Truffle Wagyu Bowl",
+    id: "1", name: "Truffle Wagyu Bowl",
     description: "A5 wagyu with black truffle shavings, served on saffron rice with micro greens.",
-    price: "$42",
-    category: "Main",
-    rating: 4.9,
-    prepTime: "25 min",
-    calories: "680 cal",
-    image: wagyuImg,
+    price: "$42", category: "Main", rating: 4.9, prepTime: "25 min", calories: "680 cal",
+    image: wagyuImg, servingSize: "Serves 1", plateDiameter: "26cm / 10in",
     colors: { main: "#f97316", accent: "#22c55e", plate: "#1e293b" },
-    shapes: [
-      { type: "sphere", args: [0.5, 16, 16] },
-      { type: "sphere", args: [0.25, 16, 16] },
-      { type: "sphere", args: [0.2, 16, 16] },
-    ],
+    shapes: [{ type: "sphere", args: [0.5, 16, 16] }, { type: "sphere", args: [0.25, 16, 16] }, { type: "sphere", args: [0.2, 16, 16] }],
   },
   {
-    id: "2",
-    name: "Dragon Roll Platter",
+    id: "2", name: "Dragon Roll Platter",
     description: "Tempura shrimp dragon roll with avocado, unagi sauce, and tobiko.",
-    price: "$28",
-    category: "Sushi",
-    rating: 4.8,
-    prepTime: "20 min",
-    calories: "520 cal",
-    image: dragonRollImg,
+    price: "$28", category: "Sushi", rating: 4.8, prepTime: "20 min", calories: "520 cal",
+    image: dragonRollImg, servingSize: "Serves 1-2", plateDiameter: "30cm / 12in",
     colors: { main: "#ef4444", accent: "#facc15", plate: "#1e293b" },
-    shapes: [
-      { type: "torus", args: [0.6, 0.2, 16, 32] },
-      { type: "sphere", args: [0.15, 16, 16] },
-      { type: "sphere", args: [0.12, 16, 16] },
-    ],
+    shapes: [{ type: "torus", args: [0.6, 0.2, 16, 32] }, { type: "sphere", args: [0.15, 16, 16] }, { type: "sphere", args: [0.12, 16, 16] }],
   },
   {
-    id: "3",
-    name: "Garden Harvest Salad",
+    id: "3", name: "Garden Harvest Salad",
     description: "Mixed heirloom greens, roasted beets, goat cheese, and citrus vinaigrette.",
-    price: "$18",
-    category: "Salad",
-    rating: 4.7,
-    prepTime: "10 min",
-    calories: "320 cal",
-    image: gardenSaladImg,
+    price: "$18", category: "Salad", rating: 4.7, prepTime: "10 min", calories: "320 cal",
+    image: gardenSaladImg, servingSize: "Serves 1", plateDiameter: "24cm / 9.5in",
     colors: { main: "#22c55e", accent: "#a855f7", plate: "#1e293b" },
-    shapes: [
-      { type: "sphere", args: [0.35, 16, 16] },
-      { type: "sphere", args: [0.28, 16, 16] },
-      { type: "sphere", args: [0.22, 16, 16] },
-    ],
+    shapes: [{ type: "sphere", args: [0.35, 16, 16] }, { type: "sphere", args: [0.28, 16, 16] }, { type: "sphere", args: [0.22, 16, 16] }],
   },
   {
-    id: "4",
-    name: "Lava Chocolate Cake",
+    id: "4", name: "Lava Chocolate Cake",
     description: "Molten dark chocolate center, vanilla bean ice cream, fresh berries.",
-    price: "$16",
-    category: "Dessert",
-    rating: 4.9,
-    prepTime: "15 min",
-    calories: "450 cal",
-    image: lavaCakeImg,
+    price: "$16", category: "Dessert", rating: 4.9, prepTime: "15 min", calories: "450 cal",
+    image: lavaCakeImg, servingSize: "Serves 1", plateDiameter: "20cm / 8in",
     colors: { main: "#92400e", accent: "#dc2626", plate: "#1e293b" },
-    shapes: [
-      { type: "cone", args: [0.5, 0.7, 16] },
-      { type: "sphere", args: [0.3, 16, 16] },
-      { type: "sphere", args: [0.1, 16, 16] },
-    ],
+    shapes: [{ type: "cone", args: [0.5, 0.7, 16] }, { type: "sphere", args: [0.3, 16, 16] }, { type: "sphere", args: [0.1, 16, 16] }],
   },
   {
-    id: "5",
-    name: "Seafood Paella",
+    id: "5", name: "Seafood Paella",
     description: "Spanish saffron rice with prawns, mussels, chorizo, and roasted peppers.",
-    price: "$36",
-    category: "Main",
-    rating: 4.8,
-    prepTime: "30 min",
-    calories: "750 cal",
-    image: seafoodPaellaImg,
+    price: "$36", category: "Main", rating: 4.8, prepTime: "30 min", calories: "750 cal",
+    image: seafoodPaellaImg, servingSize: "Serves 2-3", plateDiameter: "32cm / 12.5in",
     colors: { main: "#eab308", accent: "#ea580c", plate: "#1e293b" },
-    shapes: [
-      { type: "sphere", args: [0.3, 16, 16] },
-      { type: "sphere", args: [0.2, 16, 16] },
-      { type: "torus", args: [0.4, 0.12, 16, 32] },
-    ],
+    shapes: [{ type: "sphere", args: [0.3, 16, 16] }, { type: "sphere", args: [0.2, 16, 16] }, { type: "torus", args: [0.4, 0.12, 16, 32] }],
   },
   {
-    id: "6",
-    name: "Matcha Panna Cotta",
+    id: "6", name: "Matcha Panna Cotta",
     description: "Silky matcha cream with yuzu coulis, black sesame tuile, and edible flowers.",
-    price: "$14",
-    category: "Dessert",
-    rating: 4.6,
-    prepTime: "12 min",
-    calories: "280 cal",
-    image: matchaPannaCottaImg,
+    price: "$14", category: "Dessert", rating: 4.6, prepTime: "12 min", calories: "280 cal",
+    image: matchaPannaCottaImg, servingSize: "Serves 1", plateDiameter: "18cm / 7in",
     colors: { main: "#4ade80", accent: "#fbbf24", plate: "#1e293b" },
-    shapes: [
-      { type: "cone", args: [0.45, 0.5, 16] },
-      { type: "sphere", args: [0.15, 16, 16] },
-      { type: "sphere", args: [0.1, 16, 16] },
-    ],
+    shapes: [{ type: "cone", args: [0.45, 0.5, 16] }, { type: "sphere", args: [0.15, 16, 16] }, { type: "sphere", args: [0.1, 16, 16] }],
   },
 ];
 
@@ -136,18 +85,12 @@ function DishModel({ item }: { item: MenuItem }) {
   return (
     <Float speed={1.8} rotationIntensity={0.6} floatIntensity={0.8}>
       <group>
-        {/* Plate */}
         <mesh position={[0, -0.15, 0]} rotation={[-Math.PI / 2, 0, 0]}>
           <cylinderGeometry args={[1.3, 1.3, 0.08, 32]} />
           <meshStandardMaterial color={item.colors.plate} metalness={0.7} roughness={0.3} />
         </mesh>
-        {/* Food elements */}
         {item.shapes.map((shape, i) => {
-          const positions: [number, number, number][] = [
-            [0, 0.3, 0],
-            [0.5, 0.2, 0.3],
-            [-0.4, 0.15, -0.25],
-          ];
+          const positions: [number, number, number][] = [[0, 0.3, 0], [0.5, 0.2, 0.3], [-0.4, 0.15, -0.25]];
           const color = i === 0 ? item.colors.main : i === 1 ? item.colors.accent : item.colors.main;
           return (
             <mesh key={i} position={positions[i]}>
@@ -165,7 +108,7 @@ function DishModel({ item }: { item: MenuItem }) {
 
 const MenuCatalog = () => {
   const [activeCategory, setActiveCategory] = useState("All");
-  const [selectedDish, setSelectedDish] = useState<MenuItem | null>(null);
+  const [arDish, setArDish] = useState<MenuItem | null>(null);
 
   const filtered = activeCategory === "All" ? menuItems : menuItems.filter((m) => m.category === activeCategory);
 
@@ -185,7 +128,7 @@ const MenuCatalog = () => {
             Explore the <span className="text-gradient-warm">Menu in 3D</span>
           </h2>
           <p className="text-muted-foreground max-w-md mx-auto">
-            Browse dishes and preview them as interactive 3D models before you order.
+            Browse dishes and open the AR camera view to see them life-size on your table.
           </p>
         </motion.div>
 
@@ -217,12 +160,10 @@ const MenuCatalog = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ delay: i * 0.05 }}
-                className="group rounded-2xl glass overflow-hidden cursor-pointer hover:glow-warm transition-all duration-500"
-                onClick={() => setSelectedDish(item)}
+                className="group rounded-2xl glass overflow-hidden hover:glow-warm transition-all duration-500"
               >
                 {/* Photo + 3D split preview */}
                 <div className="relative h-56 grid grid-cols-2">
-                  {/* Reference photo */}
                   <div className="relative overflow-hidden">
                     <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent to-card/80" />
@@ -230,7 +171,6 @@ const MenuCatalog = () => {
                       📷 Photo
                     </span>
                   </div>
-                  {/* 3D Preview */}
                   <div className="relative bg-gradient-to-b from-card to-background">
                     <Canvas camera={{ position: [0, 2, 3.5], fov: 45 }}>
                       <ambientLight intensity={0.7} />
@@ -247,7 +187,6 @@ const MenuCatalog = () => {
                       Rotate
                     </div>
                   </div>
-                  {/* Category badge centered */}
                   <span className="absolute bottom-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-accent/20 text-accent text-xs font-display font-medium backdrop-blur-sm">
                     {item.category}
                   </span>
@@ -259,110 +198,50 @@ const MenuCatalog = () => {
                     <h3 className="font-display font-bold text-lg">{item.name}</h3>
                     <span className="text-primary font-display font-bold text-lg">{item.price}</span>
                   </div>
-                  <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{item.description}</p>
-                  <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                  <p className="text-sm text-muted-foreground mb-3 line-clamp-2">{item.description}</p>
+                  <div className="flex items-center gap-4 text-xs text-muted-foreground mb-3">
                     <span className="flex items-center gap-1">
-                      <Star className="w-3.5 h-3.5 text-yellow-400 fill-yellow-400" />
-                      {item.rating}
+                      <Star className="w-3.5 h-3.5 text-yellow-400 fill-yellow-400" /> {item.rating}
                     </span>
                     <span className="flex items-center gap-1">
-                      <Clock className="w-3.5 h-3.5" />
-                      {item.prepTime}
+                      <Clock className="w-3.5 h-3.5" /> {item.prepTime}
                     </span>
                     <span className="flex items-center gap-1">
-                      <Flame className="w-3.5 h-3.5 text-accent" />
-                      {item.calories}
+                      <Flame className="w-3.5 h-3.5 text-accent" /> {item.calories}
                     </span>
+                  </div>
+                  <div className="flex items-center gap-3 text-[11px] text-muted-foreground">
+                    <span className="px-2 py-0.5 rounded bg-muted">{item.servingSize}</span>
+                    <span className="px-2 py-0.5 rounded bg-muted">⌀ {item.plateDiameter}</span>
                   </div>
                 </div>
 
-                {/* Expand hint */}
+                {/* AR CTA */}
                 <div className="px-5 pb-4">
-                  <div className="flex items-center gap-1 text-xs text-primary font-display font-medium group-hover:gap-2 transition-all">
-                    View in full 3D <ChevronRight className="w-3.5 h-3.5" />
-                  </div>
+                  <button
+                    onClick={() => setArDish(item)}
+                    className="flex items-center gap-1.5 text-xs text-primary font-display font-medium group-hover:gap-2.5 transition-all"
+                  >
+                    <Camera className="w-3.5 h-3.5" />
+                    View in AR Camera <ChevronRight className="w-3.5 h-3.5" />
+                  </button>
                 </div>
               </motion.div>
             ))}
           </AnimatePresence>
         </div>
-
-        {/* Expanded 3D view modal */}
-        <AnimatePresence>
-          {selectedDish && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-xl"
-              onClick={() => setSelectedDish(null)}
-            >
-              <motion.div
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.9, opacity: 0 }}
-                className="relative w-full max-w-3xl rounded-2xl glass-strong gradient-border overflow-hidden"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <div className="grid md:grid-cols-2 h-80 md:h-96">
-                  {/* Reference photo */}
-                  <div className="relative hidden md:block">
-                    <img src={selectedDish.image} alt={selectedDish.name} className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent to-card/60" />
-                    <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-background/60 text-foreground text-xs font-display font-medium backdrop-blur-sm">
-                      📷 Reference Photo
-                    </span>
-                  </div>
-                  {/* 3D view */}
-                  <div className="relative">
-                    <Canvas camera={{ position: [0, 2.5, 4], fov: 45 }}>
-                      <ambientLight intensity={0.8} />
-                      <pointLight position={[5, 5, 5]} color={selectedDish.colors.main} intensity={1} />
-                      <pointLight position={[-5, 3, -5]} color={selectedDish.colors.accent} intensity={0.6} />
-                      <spotLight position={[0, 8, 0]} intensity={0.3} />
-                      <DishModel item={selectedDish} />
-                      <OrbitControls enableZoom autoRotate autoRotateSpeed={1} enablePan={false} />
-                    </Canvas>
-                    <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-primary/20 text-primary text-xs font-display font-medium backdrop-blur-sm">
-                      🧊 3D Preview
-                    </span>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <div className="flex items-start justify-between mb-2">
-                    <h3 className="font-display font-bold text-2xl">{selectedDish.name}</h3>
-                    <span className="text-primary font-display font-bold text-2xl">{selectedDish.price}</span>
-                  </div>
-                  <p className="text-muted-foreground mb-4">{selectedDish.description}</p>
-                  <div className="flex items-center gap-6 text-sm text-muted-foreground">
-                    <span className="flex items-center gap-1">
-                      <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" /> {selectedDish.rating}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Clock className="w-4 h-4" /> {selectedDish.prepTime}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Flame className="w-4 h-4 text-accent" /> {selectedDish.calories}
-                    </span>
-                  </div>
-                  <div className="mt-4 flex items-center gap-1 text-xs text-muted-foreground">
-                    <RotateCcw className="w-3.5 h-3.5" />
-                    Drag to rotate • Scroll to zoom
-                  </div>
-                </div>
-                <button
-                  onClick={() => setSelectedDish(null)}
-                  className="absolute top-4 right-4 w-8 h-8 rounded-full glass flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  ✕
-                </button>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </div>
+
+      {/* AR Camera modal */}
+      <AnimatePresence>
+        {arDish && (
+          <ARCameraView dish={arDish} onClose={() => setArDish(null)} />
+        )}
+      </AnimatePresence>
     </section>
   );
 };
 
 export default MenuCatalog;
+export { menuItems };
+export type { MenuItem };

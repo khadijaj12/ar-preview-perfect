@@ -1,44 +1,29 @@
-import { motion } from "framer-motion";
-import { Canvas } from "@react-three/fiber";
-import { Float, MeshDistortMaterial, OrbitControls } from "@react-three/drei";
-import { QrCode, RotateCcw, ZoomIn, Utensils } from "lucide-react";
-import foodPreview from "@/assets/food-preview.jpg";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { QrCode, Camera, Smartphone, ArrowRight } from "lucide-react";
+import ARCameraView from "@/components/ARCameraView";
 
-function FoodModel() {
-  return (
-    <Float speed={1.5} rotationIntensity={0.5} floatIntensity={1}>
-      <group>
-        {/* Plate */}
-        <mesh position={[0, -0.1, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-          <cylinderGeometry args={[1.5, 1.5, 0.1, 32]} />
-          <meshStandardMaterial color="#334155" metalness={0.8} roughness={0.2} />
-        </mesh>
-        {/* Food items */}
-        <mesh position={[0, 0.3, 0]}>
-          <sphereGeometry args={[0.4, 16, 16]} />
-          <MeshDistortMaterial color="#f97316" distort={0.2} speed={1.5} />
-        </mesh>
-        <mesh position={[0.6, 0.2, 0.3]}>
-          <sphereGeometry args={[0.25, 16, 16]} />
-          <MeshDistortMaterial color="#ef4444" distort={0.15} speed={2} />
-        </mesh>
-        <mesh position={[-0.5, 0.15, -0.2]}>
-          <sphereGeometry args={[0.3, 16, 16]} />
-          <MeshDistortMaterial color="#22c55e" distort={0.2} speed={1} />
-        </mesh>
-      </group>
-    </Float>
-  );
-}
+const demoDish = {
+  name: "Truffle Wagyu Bowl",
+  servingSize: "Serves 1",
+  plateDiameter: "26cm / 10in",
+  colors: { main: "#f97316", accent: "#22c55e", plate: "#1e293b" },
+  shapes: [
+    { type: "sphere" as const, args: [0.5, 16, 16] },
+    { type: "sphere" as const, args: [0.25, 16, 16] },
+    { type: "sphere" as const, args: [0.2, 16, 16] },
+  ],
+};
 
-const features = [
-  { icon: QrCode, title: "QR Scan", desc: "Scan menu QR code to start" },
-  { icon: RotateCcw, title: "360° View", desc: "Rotate and inspect dishes" },
-  { icon: ZoomIn, title: "True Scale", desc: "Life-size portion preview" },
-  { icon: Utensils, title: "Nutrition", desc: "AI-powered nutrition data" },
+const steps = [
+  { icon: QrCode, title: "Scan QR", desc: "Point your phone at the menu QR code" },
+  { icon: Camera, title: "Open Camera", desc: "Camera activates with AR overlay" },
+  { icon: Smartphone, title: "See the Dish", desc: "Life-size 3D model on your table" },
 ];
 
 const FoodPreview = () => {
+  const [showAR, setShowAR] = useState(false);
+
   return (
     <section className="py-24 relative" id="food">
       <div className="container">
@@ -49,68 +34,98 @@ const FoodPreview = () => {
           className="text-center mb-16"
         >
           <span className="text-primary text-sm font-display tracking-widest uppercase">
-            3D Food Preview
+            QR → Camera → AR Preview
           </span>
           <h2 className="text-4xl md:text-5xl font-display font-bold mt-3 mb-4">
-            Taste With Your <span className="text-gradient-primary">Eyes</span>
+            See Your Dish <span className="text-gradient-cyan">Before Ordering</span>
           </h2>
-          <p className="text-muted-foreground max-w-md mx-auto">
-            Preview any dish in life-size 3D right on your table before ordering.
+          <p className="text-muted-foreground max-w-lg mx-auto">
+            Scan the QR code on the menu, and your phone camera shows a life-size 3D model of the dish right on your table — giving you a realistic feel for portion size and presentation.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          {/* 3D Preview */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="order-2 md:order-1"
-          >
-            <div className="relative rounded-2xl glass-strong gradient-border overflow-hidden aspect-square max-w-md mx-auto">
-              <img
-                src={foodPreview}
-                alt="AR Food Preview"
-                className="absolute inset-0 w-full h-full object-cover opacity-40"
-              />
-              <div className="relative w-full h-full">
-                <Canvas camera={{ position: [0, 2, 4], fov: 45 }}>
-                  <ambientLight intensity={0.6} />
-                  <pointLight position={[5, 5, 5]} color="#22d3ee" intensity={0.8} />
-                  <pointLight position={[-5, 3, -5]} color="#f97316" intensity={0.4} />
-                  <FoodModel />
-                  <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={1} />
-                </Canvas>
-              </div>
-              {/* AR overlay corners */}
-              <div className="absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 border-primary/60" />
-              <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-primary/60" />
-              <div className="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-primary/60" />
-              <div className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-primary/60" />
-            </div>
-          </motion.div>
-
-          {/* Feature cards */}
-          <div className="order-1 md:order-2 grid grid-cols-2 gap-4">
-            {features.map((f, i) => (
-              <motion.div
-                key={f.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="p-6 rounded-xl glass group hover:glow-primary transition-all duration-300 text-center"
-              >
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mx-auto mb-3 group-hover:bg-primary/20 transition-colors">
-                  <f.icon className="w-6 h-6 text-primary" />
+        {/* Steps */}
+        <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 mb-16">
+          {steps.map((step, i) => (
+            <motion.div
+              key={step.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.15 }}
+              className="flex items-center gap-4"
+            >
+              <div className="flex items-center gap-3 p-4 rounded-xl glass group hover:glow-primary transition-all duration-300">
+                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <step.icon className="w-6 h-6 text-primary" />
                 </div>
-                <h3 className="font-display font-semibold text-sm mb-1">{f.title}</h3>
-                <p className="text-xs text-muted-foreground">{f.desc}</p>
-              </motion.div>
-            ))}
-          </div>
+                <div className="text-left">
+                  <h3 className="font-display font-semibold text-sm">{step.title}</h3>
+                  <p className="text-xs text-muted-foreground">{step.desc}</p>
+                </div>
+              </div>
+              {i < steps.length - 1 && (
+                <ArrowRight className="w-5 h-5 text-muted-foreground hidden md:block" />
+              )}
+            </motion.div>
+          ))}
         </div>
+
+        {/* Demo QR */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="max-w-sm mx-auto text-center"
+        >
+          <div
+            onClick={() => setShowAR(true)}
+            className="relative p-8 rounded-2xl glass-strong gradient-border cursor-pointer group hover:glow-cyan transition-all duration-500"
+          >
+            {/* Simulated QR code pattern */}
+            <div className="w-40 h-40 mx-auto mb-4 relative">
+              <div className="absolute inset-0 grid grid-cols-7 grid-rows-7 gap-1">
+                {Array.from({ length: 49 }).map((_, i) => {
+                  const row = Math.floor(i / 7);
+                  const col = i % 7;
+                  const isCorner =
+                    (row < 3 && col < 3) ||
+                    (row < 3 && col > 3) ||
+                    (row > 3 && col < 3);
+                  const isFilled = isCorner || Math.random() > 0.4;
+                  return (
+                    <div
+                      key={i}
+                      className={`rounded-sm transition-colors duration-300 ${
+                        isFilled
+                          ? "bg-foreground group-hover:bg-primary"
+                          : "bg-transparent"
+                      }`}
+                    />
+                  );
+                })}
+              </div>
+              {/* Scanning overlay */}
+              <div className="absolute inset-0 overflow-hidden rounded">
+                <motion.div
+                  animate={{ y: ["-100%", "100%"] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                  className="absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-80"
+                />
+              </div>
+            </div>
+            <p className="font-display font-semibold text-sm mb-1">Tap to Try AR Demo</p>
+            <p className="text-xs text-muted-foreground">Experience the camera view simulation</p>
+          </div>
+        </motion.div>
       </div>
+
+      {/* AR Camera fullscreen view */}
+      <AnimatePresence>
+        {showAR && (
+          <ARCameraView dish={demoDish} onClose={() => setShowAR(false)} />
+        )}
+      </AnimatePresence>
     </section>
   );
 };
