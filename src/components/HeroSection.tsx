@@ -10,8 +10,8 @@ function FloatingOrb() {
       <mesh>
         <icosahedronGeometry args={[1.5, 4]} />
         <MeshDistortMaterial
-          color="#22d3ee"
-          emissive="#22d3ee"
+          color="#10b981"
+          emissive="#10b981"
           emissiveIntensity={0.3}
           wireframe
           distort={0.3}
