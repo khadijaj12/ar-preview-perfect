@@ -7,7 +7,7 @@ const demoDish = {
   name: "Truffle Wagyu Bowl",
   servingSize: "Serves 1",
   plateDiameter: "26cm / 10in",
-  colors: { main: "#f97316", accent: "#22c55e", plate: "#1e293b" },
+  colors: { main: "#d4a843", accent: "#22c55e", plate: "#1a1a1a" },
   shapes: [
     { type: "sphere" as const, args: [0.5, 16, 16] },
     { type: "sphere" as const, args: [0.25, 16, 16] },
@@ -33,13 +33,13 @@ const FoodPreview = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="text-primary text-sm font-display tracking-widest uppercase">
+          <span className="text-primary text-sm font-body tracking-widest uppercase">
             QR → Camera → AR Preview
           </span>
           <h2 className="text-4xl md:text-5xl font-display font-bold mt-3 mb-4">
-            See Your Dish <span className="text-gradient-cyan">Before Ordering</span>
+            See Your Dish <span className="text-gradient-warm">Before Ordering</span>
           </h2>
-          <p className="text-muted-foreground max-w-lg mx-auto">
+          <p className="text-muted-foreground max-w-lg mx-auto font-body">
             Scan the QR code on the menu, and your phone camera shows a life-size 3D model of the dish right on your table — giving you a realistic feel for portion size and presentation.
           </p>
         </motion.div>
@@ -61,7 +61,7 @@ const FoodPreview = () => {
                 </div>
                 <div className="text-left">
                   <h3 className="font-display font-semibold text-sm">{step.title}</h3>
-                  <p className="text-xs text-muted-foreground">{step.desc}</p>
+                  <p className="text-xs text-muted-foreground font-body">{step.desc}</p>
                 </div>
               </div>
               {i < steps.length - 1 && (
@@ -80,9 +80,8 @@ const FoodPreview = () => {
         >
           <div
             onClick={() => setShowAR(true)}
-            className="relative p-8 rounded-2xl glass-strong gradient-border cursor-pointer group hover:glow-cyan transition-all duration-500"
+            className="relative p-8 rounded-2xl glass-strong gradient-border cursor-pointer group hover:glow-primary transition-all duration-500"
           >
-            {/* Simulated QR code pattern */}
             <div className="w-40 h-40 mx-auto mb-4 relative">
               <div className="absolute inset-0 grid grid-cols-7 grid-rows-7 gap-1">
                 {Array.from({ length: 49 }).map((_, i) => {
@@ -105,7 +104,6 @@ const FoodPreview = () => {
                   );
                 })}
               </div>
-              {/* Scanning overlay */}
               <div className="absolute inset-0 overflow-hidden rounded">
                 <motion.div
                   animate={{ y: ["-100%", "100%"] }}
@@ -115,12 +113,11 @@ const FoodPreview = () => {
               </div>
             </div>
             <p className="font-display font-semibold text-sm mb-1">Tap to Try AR Demo</p>
-            <p className="text-xs text-muted-foreground">Experience the camera view simulation</p>
+            <p className="text-xs text-muted-foreground font-body">Experience the camera view simulation</p>
           </div>
         </motion.div>
       </div>
 
-      {/* AR Camera fullscreen view */}
       <AnimatePresence>
         {showAR && (
           <ARCameraView dish={demoDish} onClose={() => setShowAR(false)} />

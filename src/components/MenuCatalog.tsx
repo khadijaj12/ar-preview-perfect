@@ -34,7 +34,7 @@ const menuItems: MenuItem[] = [
     description: "A5 wagyu with black truffle shavings, served on saffron rice with micro greens.",
     price: "$42", category: "Main", rating: 4.9, prepTime: "25 min", calories: "680 cal",
     image: wagyuImg, servingSize: "Serves 1", plateDiameter: "26cm / 10in",
-    colors: { main: "#f97316", accent: "#22c55e", plate: "#1e293b" },
+    colors: { main: "#d4a843", accent: "#22c55e", plate: "#1a1a1a" },
     shapes: [{ type: "sphere", args: [0.5, 16, 16] }, { type: "sphere", args: [0.25, 16, 16] }, { type: "sphere", args: [0.2, 16, 16] }],
   },
   {
@@ -42,7 +42,7 @@ const menuItems: MenuItem[] = [
     description: "Tempura shrimp dragon roll with avocado, unagi sauce, and tobiko.",
     price: "$28", category: "Sushi", rating: 4.8, prepTime: "20 min", calories: "520 cal",
     image: dragonRollImg, servingSize: "Serves 1-2", plateDiameter: "30cm / 12in",
-    colors: { main: "#ef4444", accent: "#facc15", plate: "#1e293b" },
+    colors: { main: "#ef4444", accent: "#d4a843", plate: "#1a1a1a" },
     shapes: [{ type: "torus", args: [0.6, 0.2, 16, 32] }, { type: "sphere", args: [0.15, 16, 16] }, { type: "sphere", args: [0.12, 16, 16] }],
   },
   {
@@ -50,7 +50,7 @@ const menuItems: MenuItem[] = [
     description: "Mixed heirloom greens, roasted beets, goat cheese, and citrus vinaigrette.",
     price: "$18", category: "Salad", rating: 4.7, prepTime: "10 min", calories: "320 cal",
     image: gardenSaladImg, servingSize: "Serves 1", plateDiameter: "24cm / 9.5in",
-    colors: { main: "#22c55e", accent: "#a855f7", plate: "#1e293b" },
+    colors: { main: "#22c55e", accent: "#d4a843", plate: "#1a1a1a" },
     shapes: [{ type: "sphere", args: [0.35, 16, 16] }, { type: "sphere", args: [0.28, 16, 16] }, { type: "sphere", args: [0.22, 16, 16] }],
   },
   {
@@ -58,7 +58,7 @@ const menuItems: MenuItem[] = [
     description: "Molten dark chocolate center, vanilla bean ice cream, fresh berries.",
     price: "$16", category: "Dessert", rating: 4.9, prepTime: "15 min", calories: "450 cal",
     image: lavaCakeImg, servingSize: "Serves 1", plateDiameter: "20cm / 8in",
-    colors: { main: "#92400e", accent: "#dc2626", plate: "#1e293b" },
+    colors: { main: "#92400e", accent: "#d4a843", plate: "#1a1a1a" },
     shapes: [{ type: "cone", args: [0.5, 0.7, 16] }, { type: "sphere", args: [0.3, 16, 16] }, { type: "sphere", args: [0.1, 16, 16] }],
   },
   {
@@ -66,7 +66,7 @@ const menuItems: MenuItem[] = [
     description: "Spanish saffron rice with prawns, mussels, chorizo, and roasted peppers.",
     price: "$36", category: "Main", rating: 4.8, prepTime: "30 min", calories: "750 cal",
     image: seafoodPaellaImg, servingSize: "Serves 2-3", plateDiameter: "32cm / 12.5in",
-    colors: { main: "#eab308", accent: "#ea580c", plate: "#1e293b" },
+    colors: { main: "#d4a843", accent: "#ea580c", plate: "#1a1a1a" },
     shapes: [{ type: "sphere", args: [0.3, 16, 16] }, { type: "sphere", args: [0.2, 16, 16] }, { type: "torus", args: [0.4, 0.12, 16, 32] }],
   },
   {
@@ -74,7 +74,7 @@ const menuItems: MenuItem[] = [
     description: "Silky matcha cream with yuzu coulis, black sesame tuile, and edible flowers.",
     price: "$14", category: "Dessert", rating: 4.6, prepTime: "12 min", calories: "280 cal",
     image: matchaPannaCottaImg, servingSize: "Serves 1", plateDiameter: "18cm / 7in",
-    colors: { main: "#4ade80", accent: "#fbbf24", plate: "#1e293b" },
+    colors: { main: "#4ade80", accent: "#d4a843", plate: "#1a1a1a" },
     shapes: [{ type: "cone", args: [0.45, 0.5, 16] }, { type: "sphere", args: [0.15, 16, 16] }, { type: "sphere", args: [0.1, 16, 16] }],
   },
 ];
@@ -121,13 +121,13 @@ const MenuCatalog = () => {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <span className="text-accent text-sm font-display tracking-widest uppercase">
+          <span className="text-primary text-sm font-body tracking-widest uppercase">
             Interactive Menu
           </span>
           <h2 className="text-4xl md:text-5xl font-display font-bold mt-3 mb-4">
             Explore the <span className="text-gradient-warm">Menu in 3D</span>
           </h2>
-          <p className="text-muted-foreground max-w-md mx-auto">
+          <p className="text-muted-foreground max-w-md mx-auto font-body">
             Browse dishes and open the AR camera view to see them life-size on your table.
           </p>
         </motion.div>
@@ -138,9 +138,9 @@ const MenuCatalog = () => {
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-5 py-2 rounded-full text-sm font-display font-medium transition-all duration-300 ${
+              className={`px-5 py-2 rounded-full text-sm font-body font-medium transition-all duration-300 ${
                 activeCategory === cat
-                  ? "bg-accent text-accent-foreground glow-accent"
+                  ? "bg-primary text-primary-foreground glow-primary"
                   : "glass text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -160,14 +160,13 @@ const MenuCatalog = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ delay: i * 0.05 }}
-                className="group rounded-2xl glass overflow-hidden hover:glow-warm transition-all duration-500"
+                className="group rounded-2xl glass overflow-hidden hover:glow-primary transition-all duration-500"
               >
-                {/* Photo + 3D split preview */}
                 <div className="relative h-56 grid grid-cols-2">
                   <div className="relative overflow-hidden">
                     <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent to-card/80" />
-                    <span className="absolute top-3 left-3 px-2 py-0.5 rounded-full bg-background/60 text-foreground text-[10px] font-display font-medium backdrop-blur-sm">
+                    <span className="absolute top-3 left-3 px-2 py-0.5 rounded-full bg-background/60 text-foreground text-[10px] font-body font-medium backdrop-blur-sm">
                       📷 Photo
                     </span>
                   </div>
@@ -179,48 +178,46 @@ const MenuCatalog = () => {
                       <DishModel item={item} />
                       <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={2} enablePan={false} />
                     </Canvas>
-                    <span className="absolute top-3 right-3 px-2 py-0.5 rounded-full bg-primary/20 text-primary text-[10px] font-display font-medium backdrop-blur-sm">
+                    <span className="absolute top-3 right-3 px-2 py-0.5 rounded-full bg-primary/20 text-primary text-[10px] font-body font-medium backdrop-blur-sm">
                       🧊 3D Model
                     </span>
-                    <div className="absolute bottom-3 right-3 flex items-center gap-1 text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="absolute bottom-3 right-3 flex items-center gap-1 text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity font-body">
                       <RotateCcw className="w-3 h-3" />
                       Rotate
                     </div>
                   </div>
-                  <span className="absolute bottom-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-accent/20 text-accent text-xs font-display font-medium backdrop-blur-sm">
+                  <span className="absolute bottom-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-primary/20 text-primary text-xs font-body font-medium backdrop-blur-sm">
                     {item.category}
                   </span>
                 </div>
 
-                {/* Info */}
                 <div className="p-5">
                   <div className="flex items-start justify-between mb-2">
                     <h3 className="font-display font-bold text-lg">{item.name}</h3>
                     <span className="text-primary font-display font-bold text-lg">{item.price}</span>
                   </div>
-                  <p className="text-sm text-muted-foreground mb-3 line-clamp-2">{item.description}</p>
-                  <div className="flex items-center gap-4 text-xs text-muted-foreground mb-3">
+                  <p className="text-sm text-muted-foreground mb-3 line-clamp-2 font-body">{item.description}</p>
+                  <div className="flex items-center gap-4 text-xs text-muted-foreground mb-3 font-body">
                     <span className="flex items-center gap-1">
-                      <Star className="w-3.5 h-3.5 text-yellow-400 fill-yellow-400" /> {item.rating}
+                      <Star className="w-3.5 h-3.5 text-primary fill-primary" /> {item.rating}
                     </span>
                     <span className="flex items-center gap-1">
                       <Clock className="w-3.5 h-3.5" /> {item.prepTime}
                     </span>
                     <span className="flex items-center gap-1">
-                      <Flame className="w-3.5 h-3.5 text-accent" /> {item.calories}
+                      <Flame className="w-3.5 h-3.5 text-primary" /> {item.calories}
                     </span>
                   </div>
-                  <div className="flex items-center gap-3 text-[11px] text-muted-foreground">
+                  <div className="flex items-center gap-3 text-[11px] text-muted-foreground font-body">
                     <span className="px-2 py-0.5 rounded bg-muted">{item.servingSize}</span>
                     <span className="px-2 py-0.5 rounded bg-muted">⌀ {item.plateDiameter}</span>
                   </div>
                 </div>
 
-                {/* AR CTA */}
                 <div className="px-5 pb-4">
                   <button
                     onClick={() => setArDish(item)}
-                    className="flex items-center gap-1.5 text-xs text-primary font-display font-medium group-hover:gap-2.5 transition-all"
+                    className="flex items-center gap-1.5 text-xs text-primary font-body font-medium group-hover:gap-2.5 transition-all"
                   >
                     <Camera className="w-3.5 h-3.5" />
                     View in AR Camera <ChevronRight className="w-3.5 h-3.5" />
@@ -232,7 +229,6 @@ const MenuCatalog = () => {
         </div>
       </div>
 
-      {/* AR Camera modal */}
       <AnimatePresence>
         {arDish && (
           <ARCameraView dish={arDish} onClose={() => setArDish(null)} />

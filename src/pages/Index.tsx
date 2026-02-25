@@ -17,7 +17,7 @@ const Index = () => {
       <AIFeatures />
       <TechStack />
       <footer className="py-8 border-t border-border/50">
-        <div className="container text-center text-sm text-muted-foreground font-display">
+        <div className="container text-center text-sm text-muted-foreground font-body tracking-wide">
           © 2026 ARView — AI-Powered Augmented Reality Previews
         </div>
       </footer>

@@ -13,7 +13,7 @@ const TechStack = () => {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="text-center text-sm text-muted-foreground mb-8 font-display tracking-widest uppercase"
+          className="text-center text-sm text-muted-foreground mb-8 font-body tracking-widest uppercase"
         >
           Core Technologies
         </motion.p>
@@ -25,7 +25,7 @@ const TechStack = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.05 }}
-              className="px-4 py-2 rounded-full glass text-sm text-muted-foreground font-display hover:text-primary hover:border-primary/30 transition-colors"
+              className="px-4 py-2 rounded-full glass text-sm text-muted-foreground font-body hover:text-primary hover:border-primary/30 transition-colors"
             >
               {t}
             </motion.span>

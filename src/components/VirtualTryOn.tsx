@@ -39,13 +39,13 @@ const VirtualTryOn = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="text-primary text-sm font-display tracking-widest uppercase">
+          <span className="text-primary text-sm font-body tracking-widest uppercase">
             Virtual Try-On
           </span>
           <h2 className="text-4xl md:text-5xl font-display font-bold mt-3 mb-4">
-            Wear It <span className="text-gradient-primary">Virtually</span>
+            Wear It <span className="gold-shimmer">Virtually</span>
           </h2>
-          <p className="text-muted-foreground max-w-lg mx-auto">
+          <p className="text-muted-foreground max-w-lg mx-auto font-body">
             Scan the QR code, point your camera, and see a realistic 3D model of the clothing on you — with AI-powered body scanning for real-time measurements and perfect size recommendations.
           </p>
         </motion.div>
@@ -62,18 +62,14 @@ const VirtualTryOn = () => {
               onClick={() => setShowAR(true)}
               className="relative w-[280px] h-[560px] rounded-[2.5rem] glass-strong overflow-hidden gradient-border glow-primary cursor-pointer group"
             >
-              {/* Phone notch */}
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-7 bg-background rounded-b-2xl z-10" />
-              {/* Screen content */}
               <img
                 src={tryonPreview}
                 alt="Virtual Try-On Preview"
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              {/* QR overlay */}
               <div className="absolute inset-0 flex items-center justify-center bg-background/40 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300">
                 <div className="text-center">
-                  {/* Mini QR */}
                   <div className="w-24 h-24 mx-auto mb-3 relative">
                     <div className="absolute inset-0 grid grid-cols-5 grid-rows-5 gap-0.5">
                       {Array.from({ length: 25 }).map((_, i) => {
@@ -98,20 +94,18 @@ const VirtualTryOn = () => {
                     </div>
                   </div>
                   <p className="font-display font-semibold text-sm text-foreground">Tap to Try On</p>
-                  <p className="text-xs text-muted-foreground">Experience AR camera demo</p>
+                  <p className="text-xs text-muted-foreground font-body">Experience AR camera demo</p>
                 </div>
               </div>
-              {/* Scan overlay */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-3/4 h-1 bg-primary/60 animate-scan-line rounded-full blur-sm" />
               </div>
-              {/* AR UI overlay */}
               <div className="absolute bottom-6 left-4 right-4 glass rounded-xl p-3">
                 <div className="flex items-center gap-2 mb-2">
                   <div className="w-2 h-2 rounded-full bg-primary animate-pulse-glow" />
-                  <span className="text-xs text-primary font-display">Body Scan Active</span>
+                  <span className="text-xs text-primary font-body">Body Scan Active</span>
                 </div>
-                <div className="flex justify-between text-xs text-muted-foreground">
+                <div className="flex justify-between text-xs text-muted-foreground font-body">
                   <span>Size: M</span>
                   <span>Fit: 96%</span>
                   <span>Style: Match</span>
@@ -136,12 +130,11 @@ const VirtualTryOn = () => {
                 </div>
                 <div>
                   <h3 className="font-display font-semibold mb-1">{step.title}</h3>
-                  <p className="text-sm text-muted-foreground">{step.description}</p>
+                  <p className="text-sm text-muted-foreground font-body">{step.description}</p>
                 </div>
               </motion.div>
             ))}
 
-            {/* CTA */}
             <motion.button
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -159,7 +152,6 @@ const VirtualTryOn = () => {
         </div>
       </div>
 
-      {/* AR fullscreen view */}
       <AnimatePresence>
         {showAR && <ARTryOnView onClose={() => setShowAR(false)} />}
       </AnimatePresence>
