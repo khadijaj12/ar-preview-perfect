@@ -45,13 +45,13 @@ const AIFeatures = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="text-primary text-sm font-display tracking-widest uppercase">
+          <span className="text-primary text-sm font-body tracking-widest uppercase">
             AI Intelligence
           </span>
           <h2 className="text-4xl md:text-5xl font-display font-bold mt-3 mb-4">
-            Powered by <span className="text-gradient-primary">AI</span>
+            Powered by <span className="gold-shimmer">AI</span>
           </h2>
-          <p className="text-muted-foreground max-w-md mx-auto">
+          <p className="text-muted-foreground max-w-md mx-auto font-body">
             Machine learning and computer vision work together to deliver hyper-realistic previews.
           </p>
         </motion.div>
@@ -70,7 +70,7 @@ const AIFeatures = () => {
                 <f.icon className="w-6 h-6 text-primary" />
               </div>
               <h3 className="font-display font-semibold mb-2">{f.title}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">{f.description}</p>
+              <p className="text-sm text-muted-foreground leading-relaxed font-body">{f.description}</p>
             </motion.div>
           ))}
         </div>

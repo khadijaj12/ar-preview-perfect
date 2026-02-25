@@ -17,7 +17,7 @@ const Navbar = () => {
       <div className="container flex items-center justify-between h-16">
         <a href="#" className="flex items-center gap-2 font-display font-bold text-lg">
           <Eye className="w-6 h-6 text-primary" />
-          <span>AR<span className="text-primary">View</span></span>
+          <span className="text-foreground">AR<span className="text-primary">View</span></span>
         </a>
 
         {/* Desktop */}
@@ -26,7 +26,7 @@ const Navbar = () => {
             <a
               key={l.href}
               href={l.href}
-              className="text-sm text-muted-foreground hover:text-primary transition-colors font-display"
+              className="text-sm text-muted-foreground hover:text-primary transition-colors font-body tracking-wide"
             >
               {l.label}
             </a>
@@ -64,7 +64,7 @@ const Navbar = () => {
                   key={l.href}
                   href={l.href}
                   onClick={() => setOpen(false)}
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors font-display py-2"
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors font-body py-2"
                 >
                   {l.label}
                 </a>

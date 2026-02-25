@@ -54,22 +54,15 @@ const ARCameraView = ({ dish, onClose }: ARCameraViewProps) => {
       exit={{ opacity: 0 }}
       className="fixed inset-0 z-50 bg-background/95"
     >
-      {/* Camera viewfinder background */}
       <div className="absolute inset-0">
-        <img
-          src={arTableBg}
-          alt="Restaurant table"
-          className="w-full h-full object-cover"
-        />
+        <img src={arTableBg} alt="Restaurant table" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background/60" />
       </div>
 
-      {/* AR scan line */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="ar-scan-line absolute left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent opacity-60" />
       </div>
 
-      {/* AR corner brackets */}
       <div className="absolute inset-8 pointer-events-none">
         <div className="absolute top-0 left-0 w-12 h-12 border-t-2 border-l-2 border-primary/70 rounded-tl-lg" />
         <div className="absolute top-0 right-0 w-12 h-12 border-t-2 border-r-2 border-primary/70 rounded-tr-lg" />
@@ -77,7 +70,6 @@ const ARCameraView = ({ dish, onClose }: ARCameraViewProps) => {
         <div className="absolute bottom-0 right-0 w-12 h-12 border-b-2 border-r-2 border-primary/70 rounded-br-lg" />
       </div>
 
-      {/* 3D dish overlaid on table */}
       <div className="absolute inset-0">
         <Canvas camera={{ position: [0, 3, 5], fov: 40 }}>
           <ambientLight intensity={0.8} />
@@ -89,7 +81,6 @@ const ARCameraView = ({ dish, onClose }: ARCameraViewProps) => {
         </Canvas>
       </div>
 
-      {/* Top bar */}
       <div className="absolute top-0 left-0 right-0 p-4 flex items-center justify-between z-10">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -98,7 +89,7 @@ const ARCameraView = ({ dish, onClose }: ARCameraViewProps) => {
           className="flex items-center gap-2"
         >
           <div className="w-3 h-3 rounded-full bg-destructive animate-pulse" />
-          <span className="text-xs font-display text-foreground/80 tracking-wider uppercase">AR Camera Active</span>
+          <span className="text-xs font-body text-foreground/80 tracking-wider uppercase">AR Camera Active</span>
         </motion.div>
         <button
           onClick={onClose}
@@ -108,7 +99,6 @@ const ARCameraView = ({ dish, onClose }: ARCameraViewProps) => {
         </button>
       </div>
 
-      {/* Dish info overlay */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -118,14 +108,13 @@ const ARCameraView = ({ dish, onClose }: ARCameraViewProps) => {
         <div className="glass-strong rounded-2xl p-5 max-w-md mx-auto">
           <h3 className="font-display font-bold text-lg mb-3">{dish.name}</h3>
 
-          {/* Portion info */}
           <div className="flex items-center gap-4 mb-4">
             <div className="flex items-center gap-2 text-sm">
               <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
                 <Ruler className="w-4 h-4 text-primary" />
               </div>
               <div>
-                <div className="text-xs text-muted-foreground">Plate Size</div>
+                <div className="text-xs text-muted-foreground font-body">Plate Size</div>
                 <div className="font-display font-semibold text-sm">{dish.plateDiameter}</div>
               </div>
             </div>
@@ -134,14 +123,13 @@ const ARCameraView = ({ dish, onClose }: ARCameraViewProps) => {
                 <Users className="w-4 h-4 text-accent" />
               </div>
               <div>
-                <div className="text-xs text-muted-foreground">Serving</div>
+                <div className="text-xs text-muted-foreground font-body">Serving</div>
                 <div className="font-display font-semibold text-sm">{dish.servingSize}</div>
               </div>
             </div>
           </div>
 
-          {/* Controls */}
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+          <div className="flex items-center gap-2 text-xs text-muted-foreground font-body">
             <RotateCcw className="w-3.5 h-3.5" />
             Drag to rotate
             <span className="mx-1">•</span>
