@@ -72,18 +72,12 @@ const VirtualTryOn = () => {
                 <div className="text-center">
                   <div className="w-24 h-24 mx-auto mb-3 relative">
                     <div className="absolute inset-0 grid grid-cols-5 grid-rows-5 gap-0.5">
-                      {Array.from({ length: 25 }).map((_, i) => {
-                        const row = Math.floor(i / 5);
-                        const col = i % 5;
-                        const isCorner = (row < 2 && col < 2) || (row < 2 && col > 2) || (row > 2 && col < 2);
-                        const isFilled = isCorner || Math.random() > 0.35;
-                        return (
+                      {[1,1,0,1,1,1,0,1,0,1,0,1,1,1,0,1,0,0,0,1,1,1,0,1,1].map((filled, i) => (
                           <div
                             key={i}
-                            className={`rounded-sm ${isFilled ? "bg-primary" : "bg-transparent"}`}
+                            className={`rounded-sm ${filled ? "bg-primary" : "bg-transparent"}`}
                           />
-                        );
-                      })}
+                        ))}
                     </div>
                     <div className="absolute inset-0 overflow-hidden rounded">
                       <motion.div
