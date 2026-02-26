@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Canvas } from "@react-three/fiber";
 import { Float, MeshDistortMaterial, OrbitControls } from "@react-three/drei";
@@ -66,14 +66,14 @@ const ARTryOnView = ({ onClose }: ARTryOnViewProps) => {
   const [scanComplete, setScanComplete] = useState(false);
   const [showMeasurements, setShowMeasurements] = useState(false);
 
-  useState(() => {
+  useEffect(() => {
     const t1 = setTimeout(() => setScanComplete(true), 3000);
     const t2 = setTimeout(() => setShowMeasurements(true), 4000);
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
     };
-  });
+  }, []);
 
   return (
     <motion.div
