@@ -84,25 +84,16 @@ const FoodPreview = () => {
           >
             <div className="w-40 h-40 mx-auto mb-4 relative">
               <div className="absolute inset-0 grid grid-cols-7 grid-rows-7 gap-1">
-                {Array.from({ length: 49 }).map((_, i) => {
-                  const row = Math.floor(i / 7);
-                  const col = i % 7;
-                  const isCorner =
-                    (row < 3 && col < 3) ||
-                    (row < 3 && col > 3) ||
-                    (row > 3 && col < 3);
-                  const isFilled = isCorner || Math.random() > 0.4;
-                  return (
+                {[1,1,1,0,1,1,1,1,0,1,1,1,0,1,1,1,1,0,0,1,1,0,1,0,1,0,1,0,1,0,0,1,0,0,1,1,1,0,1,1,0,1,1,0,1,0,1,0,1].map((filled, i) => (
                     <div
                       key={i}
                       className={`rounded-sm transition-colors duration-300 ${
-                        isFilled
+                        filled
                           ? "bg-foreground group-hover:bg-primary"
                           : "bg-transparent"
                       }`}
                     />
-                  );
-                })}
+                  ))}
               </div>
               <div className="absolute inset-0 overflow-hidden rounded">
                 <motion.div
